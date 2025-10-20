@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('id_kegiatan')->constrained('kegiatan')->cascadeOnUpdate()->cascadeOnDelete();
             $table->string('nim', 10);
+            $table->timestamp('has_vote')->nullable();
             $table->foreign('nim')->references('nim')->on('mahasiswa')->cascadeOnUpdate()->restrictOnDelete();
             $table->timestamps();
         });

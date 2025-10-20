@@ -26,14 +26,43 @@ export type AppPageProps<
     sidebarOpen: boolean;
 };
 
+export interface ProgramStudi {
+    kode: string;
+    nama: string;
+}
+
 export interface User {
-    id: number;
-    name: string;
+    nim: string;
+    nama: string;
     email: string;
     avatar?: string;
+    angkatan: number;
     email_verified_at: string | null;
     created_at: string;
     updated_at: string;
+    program_studi: ProgramStudi;
+}
+
+export interface Kegiatan {
+    id: number;
+    nama: string;
+    tahun: number;
+    waktu_mulai: string;
+    waktu_mulai_raw: string;
+    waktu_selesai: string;
+    waktu_selesai_raw: string;
+    kandidat?: Kandidat[];
+}
+
+export interface Kandidat {
+    id: number;
+    no_urut: string;
+    foto: string;
+    visi: string;
+    misi: string;
+    jumlah_suara: number;
+    kegiatan?: Kegiatan;
+    mahasiswa?: User[];
 }
 
 export type BreadcrumbItemType = BreadcrumbItem;

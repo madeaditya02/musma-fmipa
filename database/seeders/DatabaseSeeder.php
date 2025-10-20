@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Kegiatan;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -23,5 +24,9 @@ class DatabaseSeeder extends Seeder
         $this->call(UserSeeder::class);
         $this->call(KegiatanSeeder::class);
         $this->call(KandidatSeeder::class);
+
+        $user = User::where('email', 'dpmfmipaunud2025@gmail.com')->get()->first();
+        $kegiatan = Kegiatan::first();
+        $kegiatan->mahasiswa()->attach($user->nim);
     }
 }

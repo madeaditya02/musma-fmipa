@@ -35,4 +35,12 @@ class Kegiatan extends Model
     {
         return $this->belongsToMany(User::class, 'surat_suara', 'id_kegiatan', 'nim');
     }
+
+    protected function casts(): array
+    {
+        return [
+            'waktu_mulai' => 'datetime',
+            'waktu_selesai' => 'datetime',
+        ];
+    }
 }
