@@ -18,6 +18,7 @@
     --radius-sm: calc(var(--radius) - 4px);
 
     --color-background: var(--background);
+    --color-background-main: #FCEBDF;
     --color-foreground: var(--foreground);
 
     --color-card: var(--card);
@@ -37,6 +38,9 @@
 
     --color-accent: var(--accent);
     --color-accent-foreground: var(--accent-foreground);
+
+    --color-accent-red: #A50000;
+    --color-accent-orange: #F5791A;
 
     --color-destructive: var(--destructive);
     --color-destructive-foreground: var(--destructive-foreground);
@@ -96,7 +100,8 @@
     --card-foreground: hsl(0 0% 3.9%);
     --popover: hsl(0 0% 100%);
     --popover-foreground: hsl(0 0% 3.9%);
-    --primary: hsl(0 0% 9%);
+    /* --primary: hsl(0 0% 9%); */
+    --primary: #DA5B00;
     --primary-foreground: hsl(0 0% 98%);
     --secondary: hsl(0 0% 92.1%);
     --secondary-foreground: hsl(0 0% 9%);

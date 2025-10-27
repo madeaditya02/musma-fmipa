@@ -20,6 +20,7 @@ class UserSeeder extends Seeder
             'angkatan' => 2021,
             'email' => 'dpmfmipaunud2025@gmail.com',
             'password' => bcrypt('password'),
+            'is_admin' => true
         ]);
         User::factory()->create([
             'nim' => '2308561000',

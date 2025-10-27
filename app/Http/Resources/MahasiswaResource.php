@@ -19,7 +19,7 @@ class MahasiswaResource extends JsonResource
             'nama' => $this->nama,
             'email' => $this->email,
             'angkatan' => $this->angkatan,
-            'program_studi' => $this->program_studi,
+            'program_studi' => $this->whenLoaded('program_studi'),
         ];
     }
 }

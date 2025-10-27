@@ -21,6 +21,7 @@ class KegiatanSeeder extends Seeder
                 'waktu_selesai' => '2025-11-12 18:00:00',
                 'ruang_lingkup' => 'fakultas',
                 'id_program_studi' => null,
+                'foto' => 'foto-kegiatan/pemilihan-caka-dpm.png',
             ]
         ]);
     }

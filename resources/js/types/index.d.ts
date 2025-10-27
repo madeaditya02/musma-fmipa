@@ -24,6 +24,7 @@ export type AppPageProps<
     quote: { message: string; author: string };
     auth: Auth;
     sidebarOpen: boolean;
+    alert: {title: string; message: string, type: string} | null
 };
 
 export interface ProgramStudi {
@@ -40,6 +41,7 @@ export interface User {
     email_verified_at: string | null;
     created_at: string;
     updated_at: string;
+    is_admin: boolean;
     program_studi: ProgramStudi;
 }
 
@@ -51,7 +53,12 @@ export interface Kegiatan {
     waktu_mulai_raw: string;
     waktu_selesai: string;
     waktu_selesai_raw: string;
+    status: 'Coming Soon' | 'Sedang Berlangsung' | 'Selesai';
     kandidat?: Kandidat[];
+    foto: string;
+    total_mahasiswa: number;
+    jumlah_pemilih: number;
+    ruang_lingkup: string;
 }
 
 export interface Kandidat {

@@ -19,6 +19,7 @@ return new class extends Migration
             $table->dateTime('waktu_mulai');
             $table->dateTime('waktu_selesai');
             $table->enum('ruang_lingkup', ['fakultas', 'program studi']);
+            $table->string('foto');
             $table->timestamps();
         });
     }

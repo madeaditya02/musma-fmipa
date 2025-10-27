@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class Kegiatan extends Model
 {
@@ -19,6 +20,7 @@ class Kegiatan extends Model
         'waktu_selesai',
         'ruang_lingkup',
         'id_program_studi',
+        'foto'
     ];
 
     public function programStudi()
@@ -33,7 +35,7 @@ class Kegiatan extends Model
 
     public function mahasiswa()
     {
-        return $this->belongsToMany(User::class, 'surat_suara', 'id_kegiatan', 'nim');
+        return $this->belongsToMany(User::class, 'surat_suara', 'id_kegiatan', 'nim')->withPivot('has_vote');
     }
 
     protected function casts(): array
@@ -42,5 +44,11 @@ class Kegiatan extends Model
             'waktu_mulai' => 'datetime',
             'waktu_selesai' => 'datetime',
         ];
+    }
+
+    public function is_user_allowed()
+    {
+        $surat_suara = $this->mahasiswa()->find(Auth::id());
+        return $surat_suara && !$surat_suara->pivot->has_vote;
     }
 }
