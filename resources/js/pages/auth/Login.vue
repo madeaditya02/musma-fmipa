@@ -19,7 +19,7 @@ defineProps<{
 </script>
 
 <template>
-    <AuthBase title="Musma DPM FMIPA" description="Masukkan NIM dan password untuk log in">
+    <AuthBase title="Musma DPM FMIPA" description="Masukkan email dan password untuk log in">
 
         <Head title="Log in" />
 
@@ -31,9 +31,9 @@ defineProps<{
             class="flex flex-col gap-6">
             <div class="grid gap-6">
                 <div class="grid gap-2">
-                    <Label for="nim">NIM</Label>
-                    <Input id="nim" type="nim" name="nim" required autofocus :tabindex="1" autocomplete="nim"
-                        placeholder="NIM Mahasiswa" />
+                    <Label for="email">Email</Label>
+                    <Input id="email" type="email" name="email" required autofocus :tabindex="1" autocomplete="email"
+                        placeholder="Email" />
                     <InputError :message="errors.email" />
                 </div>
 

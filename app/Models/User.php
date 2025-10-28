@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use PhpOffice\PhpSpreadsheet\IOFactory;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -71,5 +72,48 @@ class User extends Authenticatable
             'password' => 'hashed',
             'two_factor_confirmed_at' => 'datetime',
         ];
+    }
+
+    public static function getMahasiswaFromSheet(int $tahun)
+    {
+        // Get spreadsheet file
+        $spreadsheetPath = database_path('data-mahasiswa/data-mahasiswa-' . $tahun . '.xlsx');
+        if (!file_exists($spreadsheetPath)) {
+            $spreadsheetPath = database_path('data-mahasiswa/data-mahasiswa-2025.xlsx'); // Ganti sesuai kebutuhan
+        }
+        $spreadsheet = IOFactory::load($spreadsheetPath);
+
+        // Get list program studi and set up an array to hold mahasiswa data
+        $programStudi = ProgramStudi::all();
+        $mahasiswaData = [];
+
+        // Loop through each worksheet
+        foreach ($spreadsheet->getWorksheetIterator() as $worksheet) {
+            $data = $worksheet->toArray();
+            foreach ($data as $index => $row) {
+                // Skip header row
+                if ($index === 0) {
+                    continue;
+                }
+
+                // Get program studi ID
+                $row[4] = str_replace('Sarjana ', '', $row[4]);
+                $prodiId = $programStudi->firstWhere('nama', $row[4])?->id;
+
+                // Get status aktif/nonaktif
+                $status = explode(' ', strtolower($row[5]))[0] === 'aktif' ? 'aktif' : 'nonaktif';
+
+                // Map row data to user attributes
+                $mahasiswaData[] = [
+                    'nim' => $row[1],
+                    'nama' => $row[2],
+                    'id_program_studi' => $prodiId,
+                    'angkatan' => (int) $row[6],
+                    'status' => $status,
+                ];
+            }
+        }
+
+        return $mahasiswaData;
     }
 }

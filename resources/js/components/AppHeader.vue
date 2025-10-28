@@ -92,7 +92,7 @@ const rightNavItems: { title: string, href: string }[] = [
               <SheetHeader class="flex justify-start text-left">
                 <div class="flex justify-start items-center gap-2 text-left">
                   <AppLogoIcon class="size-6 fill-current text-black dark:text-white" />
-                  <span class="mb-0.5 truncate leading-tight font-semibold text-primary">Pemilihan Umum Raya<br />FMIPA
+                  <span class="mb-0.5 truncate leading-tight font-semibold text-primary">Musyawarah Mahasiswa<br />FMIPA
                     2025</span> <!-- ganti tahun -->
                 </div>
               </SheetHeader>
@@ -117,7 +117,7 @@ const rightNavItems: { title: string, href: string }[] = [
           </Sheet>
         </div>
 
-        <Link :href="'/dashboard'" class="flex items-center gap-x-2">
+        <Link :href="'/'" class="flex items-center gap-x-2">
         <AppLogo />
         </Link>
 

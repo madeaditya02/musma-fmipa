@@ -6,10 +6,11 @@ import { type BreadcrumbItem } from '@/types';
 import AppLayout from '@/layouts/AppLayout.vue';
 import type { ProgramStudi, Kegiatan } from '@/types';
 
-defineProps<{
+const { kegiatan } = defineProps<{
     kegiatan: Kegiatan[];
     programStudi: ProgramStudi[];
 }>();
+console.log(kegiatan);
 
 const breadcrumbs: BreadcrumbItem[] = [
     {

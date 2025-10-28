@@ -29,10 +29,10 @@ class KandidatController extends Controller
     public function index()
     {
         // Check admin access
-        $isAdmin = $this->isAdmin();
-        if (!$isAdmin) {
-            return redirect()->route('dashboard');
-        }
+        // $isAdmin = $this->isAdmin();
+        // if (!$isAdmin) {
+        //     return redirect()->route('dashboard');
+        // }
 
         // Fetch kandidat data with related kegiatan and mahasiswa kandidat
         $kandidat = Kandidat::with('kegiatan', 'mahasiswa')
@@ -59,10 +59,10 @@ class KandidatController extends Controller
     public function store(Request $request)
     {
         // Check admin access
-        $isAdmin = $this->isAdmin();
-        if (!$isAdmin) {
-            return redirect()->route('dashboard');
-        }
+        // $isAdmin = $this->isAdmin();
+        // if (!$isAdmin) {
+        //     return redirect()->route('dashboard');
+        // }
 
         // Validate input data
         $validatedData = $request->validate([
@@ -150,10 +150,10 @@ class KandidatController extends Controller
     public function update(Request $request, string $id)
     {
         // Check admin access
-        $isAdmin = $this->isAdmin();
-        if (!$isAdmin) {
-            return redirect()->route('dashboard');
-        }
+        // $isAdmin = $this->isAdmin();
+        // if (!$isAdmin) {
+        //     return redirect()->route('dashboard');
+        // }
 
         // Validate input data
         $validatedData = $request->validate([
@@ -242,10 +242,10 @@ class KandidatController extends Controller
     public function destroy(string $id)
     {
         // Check admin access
-        $isAdmin = $this->isAdmin();
-        if (!$isAdmin) {
-            return redirect()->route('dashboard');
-        }
+        // $isAdmin = $this->isAdmin();
+        // if (!$isAdmin) {
+        //     return redirect()->route('dashboard');
+        // }
 
         try {
             // Find kandidat

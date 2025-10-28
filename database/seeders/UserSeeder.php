@@ -3,8 +3,9 @@
 namespace Database\Seeders;
 
 use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Kegiatan;
 use Illuminate\Database\Seeder;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class UserSeeder extends Seeder
 {
@@ -19,6 +20,7 @@ class UserSeeder extends Seeder
             'nama' => 'Admin DPM FMIPA',
             'angkatan' => 2021,
             'email' => 'dpmfmipaunud2025@gmail.com',
+            'email_verified_at' => now(),
             'password' => bcrypt('password'),
             'is_admin' => true
         ]);
@@ -27,9 +29,27 @@ class UserSeeder extends Seeder
             'id_program_studi' => 1,
             'nama' => 'Mahasiswa FMIPA',
             'angkatan' => 2021,
-            'email' => 'mahasiswafmipa@gmail.com',
-            'password' => bcrypt('password'),
+            // 'email' => 'mahasiswafmipa@gmail.com',
+            // 'email_verified_at' => now(),
+            // 'password' => null,
         ]);
-        User::factory(100)->create();
+        User::factory()->createMany(User::getMahasiswaFromSheet(now()->year))->each(function ($user) {
+            // Get kegiatan fakultas
+            $kegiatanFakultas = Kegiatan::where('ruang_lingkup', 'fakultas')->latest()->first();
+            
+            // Get kegiatan program studi sesuai dengan id_program_studi user
+            $kegiatanProdi = Kegiatan::where('ruang_lingkup', 'program studi')
+                ->where('id_program_studi', $user->id_program_studi)
+                ->latest()->first();
+            
+            // Attach kegiatan ke user (membuat record surat suara)
+            if ($kegiatanFakultas) {
+                $user->kegiatan()->attach($kegiatanFakultas->id);
+            }
+            
+            if ($kegiatanProdi) {
+                $user->kegiatan()->attach($kegiatanProdi->id);
+            }
+        });
     }
 }

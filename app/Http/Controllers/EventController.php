@@ -11,27 +11,15 @@ use Illuminate\Support\Facades\Storage;
 
 class EventController extends Controller
 {
-    private function isAdmin()
-    {
-        $role = auth('web')->user()->is_admin;
-        return match ($role) {
-            0 => false,
-            1 => true,
-        };
-    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $isAdmin = $this->isAdmin();
-        if (!$isAdmin) {
-            return redirect()->route('dashboard');
-        }
         $kegiatan = Kegiatan::with(['kandidat.mahasiswa.program_studi'])->withCount([
                 'mahasiswa as total_mahasiswa',
                 'mahasiswa as jumlah_pemilih' => function ($query) {
-                    $query->where('has_vote', true);
+                    $query->whereNotNull('has_vote');
                 }
             ])->get()->toResourceCollection();
         $programStudi = ProgramStudi::all();
@@ -43,10 +31,6 @@ class EventController extends Controller
      */
     public function create()
     {
-        $isAdmin = $this->isAdmin();
-        if (!$isAdmin) {
-            return redirect()->route('dashboard');
-        }
         return Inertia::render('events/Tambah');
     }
 

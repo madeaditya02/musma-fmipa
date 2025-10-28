@@ -82,7 +82,7 @@ export const columns: ColumnDef<Kegiatan>[] = [
     header: () => h('div', 'Status'),
     cell: ({ row }) => {
       const status: Kegiatan['status'] = row.getValue('status')
-      return h('div', { class: 'inline-block text-xs px-2 py-1.5 rounded-xl font-medium ' + (status == 'Coming Soon' ? 'bg-yellow-100 text-yellow-800' : (status == 'Sedang Berlangsung' ? 'bg-blue-100 text-blue-800' : 'bg-green-100 text-green-800')) }, status)
+      return h('div', { class: 'inline-block text-xs px-2 py-1.5 rounded-md font-medium ' + (status == 'Coming Soon' ? 'bg-yellow-100 text-yellow-800' : (status == 'Sedang Berlangsung' ? 'bg-blue-100 text-blue-800' : 'bg-green-100 text-green-800')) }, status)
     },
   },
     {

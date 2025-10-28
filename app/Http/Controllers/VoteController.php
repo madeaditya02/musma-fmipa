@@ -16,10 +16,13 @@ class VoteController extends Controller
             return back()->with('alert', ['type' => 'error', 'title' => 'Anda adalah admin', 'message' => 'Sebagai admin, anda tidak berhak untuk melakukan voting.']);
         }
         $kegiatan = Kegiatan::with('kandidat.mahasiswa.program_studi')->findOrFail($id);
-        if ($kegiatan->tahun == now()->year && $kegiatan->is_user_allowed()) {
-            return Inertia::render('Vote', ['kegiatan' => $kegiatan]);
+        if (now()->isBefore($kegiatan->waktu_mulai)) {
+            return back()->with('alert', ['type' => 'error', 'title' => 'Pemilihan belum dimulai', 'message' => 'Tunggu hingga periode pemilihan dimulai.']);
         }
-        return back()->with('alert', ['type' => 'error', 'title' => 'Anda sudah vote', 'message' => 'Terima kasih sudah memilih calon ketua DPM FMIPA']);
+        if (!($kegiatan->tahun == now()->year && $kegiatan->is_user_allowed())) {
+            return back()->with('alert', ['type' => 'error', 'title' => 'Anda sudah vote', 'message' => 'Terima kasih sudah memilih calon ketua DPM FMIPA']);
+        }
+        return Inertia::render('Vote', ['kegiatan' => $kegiatan]);
     }
 
     public function vote(string $id, Request $request)

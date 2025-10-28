@@ -25,8 +25,8 @@ class DatabaseSeeder extends Seeder
         $this->call(KegiatanSeeder::class);
         $this->call(KandidatSeeder::class);
 
-        $user = User::where('email', 'dpmfmipaunud2025@gmail.com')->get()->first();
-        $kegiatan = Kegiatan::first();
-        $kegiatan->mahasiswa()->attach($user->nim);
+        // $user = User::where('email', 'dpmfmipaunud2025@gmail.com')->get()->first();
+        // $kegiatan = Kegiatan::first();
+        // $kegiatan->mahasiswa()->attach($user->nim);
     }
 }

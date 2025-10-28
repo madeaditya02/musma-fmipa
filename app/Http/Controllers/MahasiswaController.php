@@ -56,10 +56,10 @@ class MahasiswaController extends Controller
     public function index()
     {
         // Check admin access
-        $isAdmin = $this->isAdmin();
-        if (!$isAdmin) {
-            return redirect()->route('dashboard');
-        }
+        // $isAdmin = $this->isAdmin();
+        // if (!$isAdmin) {
+        //     return redirect()->route('dashboard');
+        // }
 
         // Fetch mahasiswa data with related program studi
         $mahasiswa = User::with('program_studi')
@@ -82,10 +82,10 @@ class MahasiswaController extends Controller
     public function store(Request $request)
     {
         // Check admin access
-        $isAdmin = $this->isAdmin();
-        if (!$isAdmin) {
-            return redirect()->route('dashboard');
-        }
+        // $isAdmin = $this->isAdmin();
+        // if (!$isAdmin) {
+        //     return redirect()->route('dashboard');
+        // }
 
         // Validate input data
         $validatedData = $request->validate([
@@ -153,10 +153,10 @@ class MahasiswaController extends Controller
     public function update(Request $request, string $nim)
     {
         // Check admin access
-        $isAdmin = $this->isAdmin();
-        if (!$isAdmin) {
-            return redirect()->route('dashboard');
-        }
+        // $isAdmin = $this->isAdmin();
+        // if (!$isAdmin) {
+        //     return redirect()->route('dashboard');
+        // }
 
         // Validate input data
         $validatedData = $request->validate([
@@ -237,10 +237,10 @@ class MahasiswaController extends Controller
     public function destroy(string $nim)
     {
         // Check admin access
-        $isAdmin = $this->isAdmin();
-        if (!$isAdmin) {
-            return redirect()->route('dashboard');
-        }
+        // $isAdmin = $this->isAdmin();
+        // if (!$isAdmin) {
+        //     return redirect()->route('dashboard');
+        // }
 
         try {
             // Find mahasiswa

@@ -30,9 +30,10 @@ class UserFactory extends Factory
             'id_program_studi' => fake()->numberBetween(1, 6),
             'nama' => fake()->name(),
             'angkatan' => fake()->year(),
-            'email' => fake()->unique()->safeEmail(),
-            'email_verified_at' => now(),
-            'password' => static::$password ??= Hash::make('password'),
+            'email' => null,
+            'email_verified_at' => null,
+            // 'password' => static::$password ??= Hash::make('musmafmipa'),
+            'password' => null,
             'remember_token' => Str::random(10),
         ];
     }

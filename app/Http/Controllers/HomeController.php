@@ -13,7 +13,6 @@ class HomeController extends Controller
     {
         $year = now()->year;
         $kegiatan = Kegiatan::with('kandidat.mahasiswa')->where('tahun', $year)->get()->first()->toResource();
-        // $kandidat = KandidatResource::collection($kegiatan->kandidat);
         return Inertia::render('Index', ['kegiatan' => $kegiatan]);
     }
 }

@@ -1,111 +1,168 @@
 <script setup lang="ts">
-import RegisteredUserController from '@/actions/App/Http/Controllers/Auth/RegisteredUserController';
 import InputError from '@/components/InputError.vue';
 import TextLink from '@/components/TextLink.vue';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import AuthBase from '@/layouts/AuthLayout.vue';
-import { login } from '@/routes';
-import { Form, Head } from '@inertiajs/vue3';
+import { Head, useForm } from '@inertiajs/vue3';
 import { LoaderCircle } from 'lucide-vue-next';
+import { ref } from 'vue';
+import axios from 'axios';
+
+const showEmailPassword = ref(false);
+const checkingStudent = ref(false);
+const studentMessage = ref('');
+const studentError = ref('');
+
+const form = useForm({
+    nim: '',
+    nama: '',
+    email: '',
+    password: '',
+    password_confirmation: '',
+});
+
+const checkStudent = async () => {
+    if (!form.nim || !form.nama) {
+        studentError.value = 'Masukkan NIM dan Nama lengkap Anda.';
+        return;
+    }
+
+    checkingStudent.value = true;
+    studentError.value = '';
+    studentMessage.value = '';
+
+    try {
+        const response = await axios.post(route('check.student'), {
+            nim: form.nim,
+            nama: form.nama,
+        });
+
+        if (response.data.exists) {
+            showEmailPassword.value = true;
+            studentMessage.value = response.data.message;
+        } else {
+            studentError.value = response.data.message;
+            showEmailPassword.value = false;
+        }
+    } catch (error: any) {
+        if (error.response?.data?.errors) {
+            const errors = error.response.data.errors;
+            studentError.value = Object.values(errors).flat().join(', ');
+        } else {
+            studentError.value = 'Terjadi kesalahan saat memeriksa data mahasiswa.';
+        }
+        showEmailPassword.value = false;
+    } finally {
+        checkingStudent.value = false;
+    }
+};
+
+const resetForm = () => {
+    showEmailPassword.value = false;
+    studentMessage.value = '';
+    studentError.value = '';
+    form.reset();
+};
+
+const submit = () => {
+    form.post(route('register'), {
+        onFinish: () => form.reset('password', 'password_confirmation'),
+    });
+};
 </script>
 
 <template>
-    <AuthBase
-        title="Create an account"
-        description="Enter your details below to create your account"
-    >
-        <Head title="Register" />
+    <AuthBase title="Daftar Akun Baru" description="Masukkan detail Anda di bawah ini untuk membuat akun">
 
-        <Form
-            v-bind="RegisteredUserController.store.form()"
-            :reset-on-success="['password', 'password_confirmation']"
-            v-slot="{ errors, processing }"
-            class="flex flex-col gap-6"
-        >
+        <Head title="Daftar" />
+
+        <form method="POST" @submit.prevent="submit" class="flex flex-col gap-6">
             <div class="grid gap-6">
+                <!-- Step 1: NIM and Nama -->
                 <div class="grid gap-2">
-                    <Label for="name">Name</Label>
-                    <Input
-                        id="name"
-                        type="text"
-                        required
-                        autofocus
-                        :tabindex="1"
-                        autocomplete="name"
-                        name="name"
-                        placeholder="Full name"
-                    />
-                    <InputError :message="errors.name" />
+                    <Label for="nim">NIM
+                        <span className='text-red-500'>*</span>
+                    </Label>
+                    <Input id="nim" type="text" required autofocus :tabindex="1" autocomplete="nim" v-model="form.nim"
+                        placeholder="Masukkan NIM Anda" :disabled="showEmailPassword" />
+                    <InputError :message="form.errors.nim" />
                 </div>
 
                 <div class="grid gap-2">
-                    <Label for="email">Email address</Label>
-                    <Input
-                        id="email"
-                        type="email"
-                        required
-                        :tabindex="2"
-                        autocomplete="email"
-                        name="email"
-                        placeholder="email@example.com"
-                    />
-                    <InputError :message="errors.email" />
+                    <Label for="nama">Nama Lengkap
+                        <span className='text-red-500'>*</span>
+                    </Label>
+                    <Input id="nama" type="text" required :tabindex="2" autocomplete="nama" v-model="form.nama"
+                        placeholder="Masukkan Nama Lengkap Anda" :disabled="showEmailPassword" />
+                    <InputError :message="form.errors.nama" />
                 </div>
 
-                <div class="grid gap-2">
-                    <Label for="password">Password</Label>
-                    <Input
-                        id="password"
-                        type="password"
-                        required
-                        :tabindex="3"
-                        autocomplete="new-password"
-                        name="password"
-                        placeholder="Password"
-                    />
-                    <InputError :message="errors.password" />
+                <!-- Check Student Button -->
+                <div v-if="!showEmailPassword" class="grid gap-2">
+                    <Button type="button" @click="checkStudent" :disabled="checkingStudent || !form.nim || !form.nama"
+                        class="w-full">
+                        <LoaderCircle v-if="checkingStudent" class="h-4 w-4 animate-spin" />
+                        Verifikasi Data
+                    </Button>
+
+                    <div v-if="studentError" class="text-sm text-red-600">
+                        {{ studentError }}
+                    </div>
+
+                    <div v-if="studentMessage" class="text-sm text-green-600">
+                        {{ studentMessage }}
+                    </div>
                 </div>
 
-                <div class="grid gap-2">
-                    <Label for="password_confirmation">Confirm password</Label>
-                    <Input
-                        id="password_confirmation"
-                        type="password"
-                        required
-                        :tabindex="4"
-                        autocomplete="new-password"
-                        name="password_confirmation"
-                        placeholder="Confirm password"
-                    />
-                    <InputError :message="errors.password_confirmation" />
-                </div>
+                <!-- Step 2: Email and Password (shown after verification) -->
+                <template v-if="showEmailPassword">
+                    <div class="grid gap-2">
+                        <Label for="email">Alamat Email
+                            <span className='text-red-500'>*</span>
+                        </Label>
+                        <Input id="email" type="email" required :tabindex="3" autocomplete="email" v-model="form.email"
+                            placeholder="Masukkan Alamat Email Anda" />
+                        <InputError :message="form.errors.email" />
+                    </div>
 
-                <Button
-                    type="submit"
-                    class="mt-2 w-full"
-                    tabindex="5"
-                    :disabled="processing"
-                    data-test="register-user-button"
-                >
-                    <LoaderCircle
-                        v-if="processing"
-                        class="h-4 w-4 animate-spin"
-                    />
-                    Create account
-                </Button>
+                    <div class="grid gap-2">
+                        <Label for="password">Kata Sandi
+                            <span className='text-red-500'>*</span>
+                        </Label>
+                        <Input id="password" type="password" required :tabindex="4" autocomplete="new-password"
+                            v-model="form.password" placeholder="Masukkan Kata Sandi Anda" />
+                        <InputError :message="form.errors.password" />
+                    </div>
+
+                    <div class="grid gap-2">
+                        <Label for="password_confirmation">Konfirmasi Kata Sandi
+                            <span className='text-red-500'>*</span>
+                        </Label>
+                        <Input id="password_confirmation" type="password" required :tabindex="4"
+                            autocomplete="new-password" v-model="form.password_confirmation"
+                            placeholder="Masukkan Konfirmasi Kata Sandi Anda" />
+                        <InputError :message="form.errors.password_confirmation" />
+                    </div>
+
+                    <div class="flex gap-2">
+                        <Button type="button" variant="outline" @click="resetForm" class="flex-1">
+                            Kembali
+                        </Button>
+                        <Button type="submit" class="flex-1" :tabindex="6" :disabled="form.processing">
+                            <LoaderCircle v-if="form.processing" class="h-4 w-4 animate-spin" />
+                            Buat Akun
+                        </Button>
+                    </div>
+                </template>
             </div>
 
             <div class="text-center text-sm text-muted-foreground">
-                Already have an account?
-                <TextLink
-                    :href="login()"
-                    class="underline underline-offset-4"
-                    :tabindex="6"
-                    >Log in</TextLink
-                >
+                Sudah memiliki akun?
+                <TextLink :href="'/login'" class="underline underline-offset-4" :tabindex="6">Masuk disini
+                </TextLink>
             </div>
-        </Form>
+        </form>
     </AuthBase>
 </template>

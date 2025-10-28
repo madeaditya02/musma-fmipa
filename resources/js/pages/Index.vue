@@ -3,10 +3,11 @@ import { Button } from '@/components/ui/button';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { BreadcrumbItem, Kegiatan } from '@/types';
 import { Head, Link, usePage } from '@inertiajs/vue3';
+import dayjs from 'dayjs';
 import { computed, onMounted, onUnmounted, ref } from 'vue';
 
 const props = defineProps<{
-  kegiatan: Kegiatan
+  kegiatan?: Kegiatan
 }>()
 
 // Countdown timer logic
@@ -16,7 +17,7 @@ let interval: number | null = null;
 const timeRemaining = computed(() => {
   // console.log(props)
 
-  const target = new Date(props.kegiatan.waktu_mulai_raw);
+  const target = new Date(props.kegiatan?.waktu_mulai_raw ?? '');
   const now = currentTime.value;
   const diff = target.getTime() - now.getTime();
 
@@ -121,15 +122,16 @@ const breadcrumbs: BreadcrumbItem[] = [
           class="absolute top-0 inset-0 h-full w-full object-cover" />
 
         <!-- Content with relative positioning and higher z-index -->
-        <div class="relative z-10 px-4 space-y-4 md:space-y-6 flex flex-col items-center justify-center">
+        <div class="relative z-10 px-4 space-y-4 md:space-y-6 flex flex-col items-center justify-center"
+          v-if="kegiatan">
           <!-- Header -->
           <div class="text-center">
             <h2 class="text-xl md:text-2xl lg:text-3xl font-bold text-foreground mb-2">
-              Musma DPM FMIPA
+              Musyawarah Mahasiswa FMIPA
             </h2>
             <p class="text-sidebar-foreground font-medium text-sm md:text-base max-w-lg">
-              Pemilihan Ketua Dewan Perwakilan Mahasiswa Fakultas Matematika dan Ilmu Pengetahuan Alam akan dimulai
-              dalam
+              Pemilihan Ketua Dewan Perwakilan Mahasiswa Fakultas Matematika dan Ilmu Pengetahuan Alam tahun {{
+                dayjs().year() }} akan dimulai dalam
             </p>
           </div>
 
@@ -183,11 +185,20 @@ const breadcrumbs: BreadcrumbItem[] = [
           </div>
 
           <!-- Status Message -->
-          <Button variant="outline" size="lg" class="text-base">
-            <Link :href="auth.user ? `/vote/${kegiatan.id}` : '/login'">
-            Mulai Sekarang!
+          <Button variant="outline" size="lg" class="text-base" as-child>
+            <Link :href="auth.user ? `/vote/${kegiatan?.id}` : '/login'">
+            Vote Sekarang!
             </Link>
           </Button>
+        </div>
+
+        <div class="relative z-10 px-4 space-y-4 md:space-y-6 flex flex-col items-center justify-center" v-else>
+          <h2 class="text-xl md:text-4xl font-semibold mb-4">Coming Soon</h2>
+          <h2 class="text-2xl md:text-5xl font-semibold">Musma FMIPA {{ dayjs().year() }}</h2>
+          <p class="text-sidebar-foreground font-medium text-sm md:text-base max-w-2xl text-center">
+            Pemilihan Ketua Dewan Perwakilan Mahasiswa Fakultas Matematika dan Ilmu Pengetahuan Alam tahun {{
+              dayjs().year() }} akan segera hadir! Tunggu dan pantau selalu informasinya.
+          </p>
         </div>
       </div>
     </div>

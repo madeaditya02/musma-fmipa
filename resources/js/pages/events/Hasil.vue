@@ -43,7 +43,7 @@ const kandidat = computed(() => {
             :key="calon.id"
             :class="(i + 1) == 3 ? '!w-fit mx-auto' : ((i + 1) % 2 == 0 ? 'items-center sm:items-start' : 'items-center sm:items-end sm:pr-8')">
             <div class="h-105 flex items-end gap-4"
-              :class="(i + 1) % 2 == 0 ? 'flex-row-reverse' : ((i + 1) == 3 ? 'sm:flex-row-reverse' : '')">
+              :class="(i + 1) % 2 == 0 ? 'sm:flex-row-reverse' : ((i + 1) == 3 ? 'sm:flex-row-reverse' : '')">
               <div class="h-80 flex flex-col justify-center"
                 :class="(i + 1) == 3 ? 'text-start' : ((i + 1) % 2 == 1 ? 'text-end w-full' : 'w-full')">
                 <h3 class="text-xl font-semibold">

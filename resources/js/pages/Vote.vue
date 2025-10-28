@@ -48,7 +48,7 @@ function vote() {
         </div>
       </div>
     </div> -->
-    <div class="h-full">
+    <div class="h-full pb-16">
       <div class="w-full flex justify-between items-start relative">
         <img src="/assets/corner-image-left.png" alt="" class="w-20 sm:w-40 lg:w-50">
         <img src="/assets/background-logo-dpm.png" alt="" class="h-20 sm:h-50 my-auto">
@@ -80,7 +80,7 @@ function vote() {
             <div class="h-full overflow-hidden rounded-b-full flex flex-col justify-end w-50 shrink-0">
               <div
                 class="h-80 w-full mt-auto rounded-full bg-linear-to-b from-[#F5791A] to-[#B42323] flex flex-col justify-end">
-                <img src="/assets/calon-2.png" class="h-auto mx-auto relative top-10" alt="">
+                <img :src="'/storage/' + kandidat.foto" class="h-auto mx-auto relative top-10" alt="">
               </div>
             </div>
           </div>
