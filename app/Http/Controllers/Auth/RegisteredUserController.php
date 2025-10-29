@@ -31,8 +31,11 @@ class RegisteredUserController extends Controller
     public function checkStudent(Request $request)
     {
         $request->validate([
-            'nim' => 'required|string|max:10',
+            'nim' => 'required|string|digits:10',
             'nama' => 'required|string|max:255',
+        ], [
+            'nim.digits' => 'NIM harus terdiri dari 10 digit.',
+            'nama.max' => 'Nama harus terdiri dari maksimal 255 karakter.',
         ]);
 
         $student_exist = User::where('nim', $request->nim)
@@ -70,7 +73,7 @@ class RegisteredUserController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
-            'nim' => 'required|string|max:10|exists:mahasiswa,nim',
+            'nim' => 'required|string|digits:10|exists:mahasiswa,nim',
             'nama' => 'required|string|max:255',
             'email' => 'required|string|lowercase|email|max:255|unique:mahasiswa,email',
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
@@ -101,18 +104,13 @@ class RegisteredUserController extends Controller
 
         $user->update([
             'email' => $request->email,
+            'email_verified_at' => now(),
             'password' => Hash::make($request->password),
         ]);
 
         // Generate surat suara
-        $kegiatan = Kegiatan::where('tahun', now()->year)->get()->first();
+        $kegiatan = Kegiatan::where('tahun', now()->year)->first();
         if ($kegiatan) {
-            // $kegiatan->mahasiswa()->attach([
-            //     $user->nim => [
-            //         'created_at' => now(),
-            //         'updated_at' => now(),
-            //     ]
-            // ]);
             DB::table('surat_suara')->insert([
                 'id_kegiatan' => $kegiatan->id,
                 'nim' => $user->nim,

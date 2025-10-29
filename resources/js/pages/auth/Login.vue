@@ -2,77 +2,86 @@
 import InputError from '@/components/InputError.vue';
 import TextLink from '@/components/TextLink.vue';
 import { Button } from '@/components/ui/button';
-import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import AuthBase from '@/layouts/AuthLayout.vue';
-import { register } from '@/routes';
-import { store } from '@/routes/login';
-import { request } from '@/routes/password';
-import { Form, Head, Link } from '@inertiajs/vue3';
+import { Head, useForm } from '@inertiajs/vue3';
 import { LoaderCircle } from 'lucide-vue-next';
+import { ref } from 'vue';
+import { route } from 'ziggy-js';
+import { Eye, EyeOff } from 'lucide-vue-next'
 
 defineProps<{
     status?: string;
     canResetPassword: boolean;
 }>();
+
+const showPassword = ref(false);
+
+const form = useForm({
+    email: '',
+    password: '',
+});
+
+const submit = () => {
+    form.post(route('login'), {
+        onFinish: () => form.reset('password'),
+    });
+};
 </script>
 
 <template>
-    <AuthBase title="Musma DPM FMIPA" description="Masukkan email dan password untuk log in">
+    <AuthBase title="Masuk ke Akun Anda" description="Masukkan email dan kata sandi Anda di bawah ini.">
 
-        <Head title="Log in" />
+        <Head title="Masuk" />
 
         <div v-if="status" class="mb-4 text-center text-sm font-medium text-green-600">
             {{ status }}
         </div>
 
-        <Form v-bind="store.form()" :reset-on-success="['password']" v-slot="{ errors, processing }"
-            class="flex flex-col gap-6">
+        <form method="POST" @submit.prevent="submit" class="flex flex-col gap-6">
             <div class="grid gap-6">
                 <div class="grid gap-2">
-                    <Label for="email">Email</Label>
-                    <Input id="email" type="email" name="email" required autofocus :tabindex="1" autocomplete="email"
-                        placeholder="Email" />
-                    <InputError :message="errors.email" />
+                    <Label for="email">Alamat Email
+                        <span className='text-red-500'>*</span>
+                    </Label>
+                    <Input id="email" type="email" required autofocus :tabindex="1" autocomplete="email"
+                        v-model="form.email" placeholder="Email@student.unud.ac.id" />
+                    <InputError :message="form.errors.email" />
                 </div>
 
                 <div class="grid gap-2">
                     <div class="flex items-center justify-between">
-                        <Label for="password">Password</Label>
-                        <TextLink v-if="canResetPassword" :href="request()" class="text-sm" :tabindex="5">
-                            Forgot password?
+                        <Label for="password">Kata Sandi
+                            <span className='text-red-500'>*</span>
+                        </Label>
+                        <TextLink v-if="canResetPassword" :href="route('password.request')" class="text-sm"
+                            :tabindex="5">
+                            Lupa kata sandi?
                         </TextLink>
                     </div>
-                    <Input id="password" type="password" name="password" required :tabindex="2"
-                        autocomplete="current-password" placeholder="Password" />
-                    <InputError :message="errors.password" />
+                    <div class="relative">
+                        <Input id="password" type="password" required :tabindex="2" autocomplete="current-password"
+                            v-model="form.password" placeholder="Kata sandi min. 8 karakter" />
+                        <button type="button" @click="showPassword = !showPassword"
+                            class="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground">
+                            <Eye v-if="!showPassword" class="h-4 w-4" />
+                            <EyeOff v-else class="h-4 w-4" />
+                        </button>
+                    </div>
+                    <InputError :message="form.errors.password" />
                 </div>
 
-                <div class="flex items-center justify-between">
-                    <Label for="remember" class="flex items-center space-x-3">
-                        <Checkbox id="remember" name="remember" :tabindex="3" />
-                        <span>Remember me</span>
-                    </Label>
-                </div>
-
-                <div class="flex gap-4 mt-4 w-full">
-                    <Button type="submit" class="w-full shrink" :tabindex="4" :disabled="processing"
-                        data-test="login-button">
-                        <LoaderCircle v-if="processing" class="h-4 w-4 animate-spin" />
-                        Log in
-                    </Button>
-                    <Button type="button" class="w-full shrink" variant="outline" as-child :tabindex="4"
-                        data-test="signup-button">
-                        <Link href="/register">Sign Up</Link>
-                    </Button>
-                </div>
+                <Button type="submit" class="mt-4 w-full" :tabindex="4" :disabled="form.processing">
+                    <LoaderCircle v-if="form.processing" class="h-4 w-4 animate-spin" />
+                    Masuk
+                </Button>
             </div>
 
             <div class="text-center text-sm text-muted-foreground">
-                Don't have an account?
-                <TextLink :href="register()" :tabindex="5">Sign up</TextLink>
+                Belum memiliki akun?
+                <TextLink :href="route('register')" :tabindex="5">Daftar disini</TextLink>
             </div>
-        </Form>
+        </form>
     </AuthBase>
 </template>

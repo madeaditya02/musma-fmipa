@@ -28,6 +28,7 @@ export type AppPageProps<
 };
 
 export interface ProgramStudi {
+    id: number;
     kode: string;
     nama: string;
 }
@@ -38,11 +39,13 @@ export interface User {
     email: string;
     avatar?: string;
     angkatan: number;
+    is_admin: number | boolean;
+    id_program_studi: number;
     email_verified_at: string | null;
+    status: 'aktif' | 'nonaktif';
     created_at: string;
     updated_at: string;
-    is_admin: boolean;
-    program_studi: ProgramStudi;
+    programStudi: ProgramStudi;
 }
 
 export interface Kegiatan {
@@ -63,13 +66,14 @@ export interface Kegiatan {
 
 export interface Kandidat {
     id: number;
+    id_kegiatan: number;
     no_urut: string;
     foto: string;
     visi: string;
     misi: string;
     jumlah_suara: number;
-    kegiatan?: Kegiatan;
-    mahasiswa?: User[];
+    kegiatan: Kegiatan;
+    mahasiswa: (User & { pivot: { jabatan: 'ketua' | 'wakil' } })[];
 }
 
 export type BreadcrumbItemType = BreadcrumbItem;

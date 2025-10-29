@@ -36,6 +36,9 @@ class User extends Authenticatable
         'email',
         'password',
         'avatar',
+        'status',
+        'is_admin',
+        'email_verified_at',
     ];
 
     /**
@@ -58,6 +61,20 @@ class User extends Authenticatable
     public function program_studi(): BelongsTo
     {
         return $this->belongsTo(ProgramStudi::class, 'id_program_studi', 'id');
+    }
+
+    public function kandidat()
+    {
+        return $this->belongsToMany(Kandidat::class, 'mahasiswa_kandidat', 'nim', 'id_kandidat')
+            ->withPivot('jabatan')
+            ->withTimestamps();
+    }
+
+    public function kegiatan()
+    {
+        return $this->belongsToMany(Kegiatan::class, 'surat_suara', 'nim', 'id_kegiatan')
+            ->withPivot('has_vote')
+            ->withTimestamps();
     }
 
     /**

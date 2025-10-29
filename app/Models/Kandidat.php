@@ -29,6 +29,7 @@ class Kandidat extends Model
     public function mahasiswa()
     {
         return $this->belongsToMany(User::class, 'mahasiswa_kandidat', 'id_kandidat', 'nim', 'id', 'nim')
-            ->withPivot('jabatan');
+            ->withPivot('jabatan')
+            ->withTimestamps();
     }
 }

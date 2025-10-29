@@ -33,11 +33,8 @@ const currentPath = typeof window !== undefined ? window.location.pathname : '';
 </script>
 
 <template>
-    <div class="px-4 py-6">
-        <Heading
-            title="Settings"
-            description="Manage your profile and account settings"
-        />
+    <div class="px-4 py-6 md:max-w-7xl w-full place-self-center">
+        <Heading title="Pengaturan" description="Kelola profil dan pengaturan akun Anda" />
 
         <div class="flex flex-col lg:flex-row lg:space-x-12">
             <aside class="w-full max-w-xl lg:w-48">

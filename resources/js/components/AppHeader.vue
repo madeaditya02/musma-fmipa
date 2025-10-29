@@ -12,8 +12,9 @@ import UserMenuContent from '@/components/UserMenuContent.vue';
 import { getInitials } from '@/composables/useInitials';
 import type { BreadcrumbItem } from '@/types';
 import { Link, usePage } from '@inertiajs/vue3';
-import { Menu } from 'lucide-vue-next';
 import { computed } from 'vue';
+import { route } from 'ziggy-js';
+import { Calendar, Home, UserCheck, Users, CheckCircle2, Menu, LucideIcon } from 'lucide-vue-next';
 
 interface Props {
   breadcrumbs?: BreadcrumbItem[];
@@ -36,31 +37,31 @@ const mainNavItems = [
   {
     title: 'Beranda',
     href: '/',
-    // icon: Home,
+    icon: Home,
   },
   {
     title: 'Kegiatan',
     href: '/events',
-    // icon: Calendar,
+    icon: Calendar,
   },
   {
     title: 'Hasil',
     href: '/result',
-    // icon: Calendar,
+    icon: CheckCircle2,
   },
   {
     title: 'Kandidat',
     href: '/candidates',
-    // icon: UserCheck,
+    icon: UserCheck,
   },
   {
     title: 'Mahasiswa',
     href: '/users',
-    // icon: Users,
+    icon: Users,
   },
 ];
 
-const rightNavItems: { title: string, href: string }[] = [
+const rightNavItems: { title: string, href: string, icon?: LucideIcon }[] = [
   // {
   //     title: 'Repository',
   //     href: 'https://github.com/laravel/vue-starter-kit',
@@ -101,7 +102,7 @@ const rightNavItems: { title: string, href: string }[] = [
                   <Link v-for="item in mainNavItems" :key="item.title" :href="item.href"
                     class="flex items-center gap-x-3 rounded-lg px-3 py-2 text-sm font-medium hover:bg-accent"
                     :class="activeItemStyles(item.href)">
-                  <!-- <component v-if="item.icon" :is="item.icon" class="h-5 w-5" /> -->
+                  <component v-if="item.icon" :is="item.icon" class="h-5 w-5" />
                   {{ item.title }}
                   </Link>
                 </nav>
@@ -143,8 +144,8 @@ const rightNavItems: { title: string, href: string }[] = [
         <div class="ml-auto flex items-center space-x-2">
           <div class="relative flex items-center space-x-1">
             <!-- <Button variant="ghost" size="icon" class="group h-9 w-9 cursor-pointer">
-                            <Search class="size-5 opacity-80 group-hover:opacity-100" />
-                        </Button> -->
+              <Search class="size-5 opacity-80 group-hover:opacity-100" />
+            </Button> -->
 
             <div class="hidden space-x-1 lg:flex">
               <template v-for="item in rightNavItems" :key="item.title">
@@ -154,7 +155,7 @@ const rightNavItems: { title: string, href: string }[] = [
                       <Button variant="ghost" size="icon" as-child class="group h-9 w-9 cursor-pointer">
                         <a :href="item.href" target="_blank" rel="noopener noreferrer">
                           <span class="sr-only">{{ item.title }}</span>
-                          <!-- <component :is="item.icon" class="size-5 opacity-80 group-hover:opacity-100" /> -->
+                          <component :is="item.icon" class="size-5 opacity-80 group-hover:opacity-100" />
                         </a>
                       </Button>
                     </TooltipTrigger>
@@ -172,7 +173,7 @@ const rightNavItems: { title: string, href: string }[] = [
               <Button variant="ghost" size="icon"
                 class="relative size-10 w-auto rounded-full py-1 px-1 sm:px-2 focus-within:ring-2 focus-within:ring-primary">
                 <Avatar class="size-8 overflow-hidden rounded-full">
-                  <AvatarImage v-if="auth.user.avatar" :src="auth.user.avatar" :alt="auth.user.nama" />
+                  <AvatarImage v-if="auth.user.avatar" :src="`/storage/${auth.user.avatar}`" :alt="auth.user.nama" />
                   <AvatarFallback
                     class="rounded-lg bg-neutral-200 font-semibold text-black dark:bg-neutral-700 dark:text-white">
                     {{ getInitials(auth.user?.nama) }}
@@ -186,11 +187,18 @@ const rightNavItems: { title: string, href: string }[] = [
             </DropdownMenuContent>
           </DropdownMenu>
 
-          <Link v-else :href="'/login'">
-          <Button type="button" variant="outline" class="flex-1">
-            Masuk
-          </Button>
-          </Link>
+          <div v-else class="flex gap-4">
+            <Link :href="route('login')">
+            <Button type="button" variant="outline" class="flex-1">
+              Masuk
+            </Button>
+            </Link>
+            <Link :href="route('register')">
+            <Button type="button" variant="default" class="flex-1">
+              Daftar
+            </Button>
+            </Link>
+          </div>
         </div>
       </div>
     </div>

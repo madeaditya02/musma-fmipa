@@ -49,7 +49,7 @@ watch(() => page.props.alert, (newFlash) => {
       }
     }" />
     <AppHeader :breadcrumbs="breadcrumbs" />
-    <AppContent :class="background == 'main' ? 'bg-background-main' : 'bg-background'">
+    <AppContent :class="background == 'main' ? 'bg-background-main mb-8' : 'bg-background mb-8'">
       <slot />
     </AppContent>
     <AppFooter />
