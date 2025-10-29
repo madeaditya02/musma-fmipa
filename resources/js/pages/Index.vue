@@ -71,7 +71,7 @@ const breadcrumbs: BreadcrumbItem[] = [
 
     <AppLayout :breadcrumbs="breadcrumbs" background="main">
 
-        <div class="flex h-full flex-1 flex-col gap-8 overflow-x-auto">
+        <div class="flex h-full flex-1 flex-col gap-8 overflow-hidden">
             <div class="relative min-h-[90vh] flex flex-1 justify-center items-center">
                 <Carousel class="absolute w-full saturate-0 md:saturate-0 md:backdrop-blur" :plugins="[plugin]"
                     @mouseenter="plugin.stop" @mouseleave="[plugin.reset(), plugin.play()]">
@@ -168,15 +168,12 @@ const breadcrumbs: BreadcrumbItem[] = [
                         </CarouselItem>
                     </CarouselContent>
                 </Carousel>
-                <!-- Background image with overlay -->
-                <img src="/assets/background-hero.png" alt="Background PEMIRA"
-                    class="absolute top-0 inset-0 h-full w-full object-cover" />
 
                 <!-- Content with relative positioning and higher z-index -->
                 <div class="relative z-10 px-4 space-y-4 md:space-y-6 flex flex-col items-center justify-center"
                     v-if="kegiatan">
                     <!-- Header -->
-                    <div class="text-center">
+                    <div class="text-center text-shadow-2xs text-shadow-accent-red/50">
                         <h2 class="text-xl md:text-2xl lg:text-3xl font-bold text-foreground mb-2">
                             Musyawarah Mahasiswa FMIPA
                         </h2>
