@@ -9,7 +9,7 @@ import AuthBase from '@/layouts/AuthLayout.vue';
 import { register } from '@/routes';
 import { store } from '@/routes/login';
 import { request } from '@/routes/password';
-import { Form, Head } from '@inertiajs/vue3';
+import { Form, Head, Link } from '@inertiajs/vue3';
 import { LoaderCircle } from 'lucide-vue-next';
 
 defineProps<{
@@ -56,10 +56,17 @@ defineProps<{
                     </Label>
                 </div>
 
-                <Button type="submit" class="mt-4 w-full" :tabindex="4" :disabled="processing" data-test="login-button">
-                    <LoaderCircle v-if="processing" class="h-4 w-4 animate-spin" />
-                    Log in
-                </Button>
+                <div class="flex gap-4 mt-4 w-full">
+                    <Button type="submit" class="w-full shrink" :tabindex="4" :disabled="processing"
+                        data-test="login-button">
+                        <LoaderCircle v-if="processing" class="h-4 w-4 animate-spin" />
+                        Log in
+                    </Button>
+                    <Button type="button" class="w-full shrink" variant="outline" as-child :tabindex="4"
+                        data-test="signup-button">
+                        <Link href="/register">Sign Up</Link>
+                    </Button>
+                </div>
             </div>
 
             <div class="text-center text-sm text-muted-foreground">

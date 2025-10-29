@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import dayjs from 'dayjs';
 import AppLogo from './AppLogo.vue';
 import { MapPin, Phone, Mail } from 'lucide-vue-next';
 </script>
@@ -35,7 +36,7 @@ import { MapPin, Phone, Mail } from 'lucide-vue-next';
                 </div>
             </div>
             <div class="w-full border-t border-sidebar-foreground text-sidebar-foreground mt-4">
-                <p class="text-center mt-4 font-medium">© 2025 MUSMA FMIPA. All rights reserved.</p>
+                <p class="text-center mt-4 font-medium">© {{ dayjs().year() }} MUSMA FMIPA. All rights reserved.</p>
             </div>
         </div>
     </footer>

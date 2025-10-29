@@ -6,6 +6,7 @@ use App\Events\VoteCandidate;
 use App\Models\Kegiatan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 
 class VoteController extends Controller
@@ -30,7 +31,8 @@ class VoteController extends Controller
         $user = Auth::user();
         $data = $request->validate(['kandidat' => 'required']);
         $kegiatan = Kegiatan::findOrFail($id);
-        $kegiatan->mahasiswa()->sync([$user->nim => ['has_vote' => now()]]);
+        DB::table('surat_suara')->where('id_kegiatan', $id)->where('nim', $user->nim)->update(['has_vote' => now()]);
+        // $kegiatan->mahasiswa()->sync([$user->nim => ['has_vote' => now()]]);
         $kandidat = $kegiatan->kandidat()->where('id', $data['kandidat'])->get()->first();
         $kandidat->jumlah_suara = $kandidat->jumlah_suara + 1;
         $kandidat->save();

@@ -17,7 +17,7 @@ class KegiatanSeeder extends Seeder
             [
                 'nama' => 'Pemilihan Ketua DPM FMIPA 2026',
                 'tahun' => 2025,
-                'waktu_mulai' => '2025-11-12 06:00:00',
+                'waktu_mulai' => '2025-10-28 06:00:00',
                 'waktu_selesai' => '2025-11-12 18:00:00',
                 'ruang_lingkup' => 'fakultas',
                 'id_program_studi' => null,

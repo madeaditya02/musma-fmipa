@@ -12,7 +12,7 @@ use App\Http\Middleware\IsAdmin;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-// Route::get('dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::get('/vote/{id}', [VoteController::class, 'index'])->middleware('auth');
 Route::post('/vote/{id}', [VoteController::class, 'vote'])->middleware('auth');
