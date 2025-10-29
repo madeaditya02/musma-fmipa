@@ -17,7 +17,7 @@ import { Badge } from '@/components/ui/badge';
 import { CheckCircle2, Target, Users } from 'lucide-vue-next';
 import { Separator } from '@/components/ui/separator';
 
-defineProps<{
+const props = defineProps<{
   kegiatan: Kegiatan
 }>()
 
@@ -61,7 +61,7 @@ const formatMisi = (misi: string): string[] => {
               2px -2px 0 #A50000,
               -2px 2px 0 #A50000,
               2px 2px 0 #A50000;">
-              Pemilihan Ketua DPM FMIPA 2026
+          Pemilihan Ketua DPM FMIPA 2026
         </h1>
       </div>
 
@@ -232,7 +232,7 @@ const formatMisi = (misi: string): string[] => {
                 <h3 class="text-xl font-semibold">
                   {{ kandidat.mahasiswa![0].nama }}
                 </h3>
-                <small>{{ kandidat.mahasiswa![0].programStudi.nama }} {{
+                <small>{{ kandidat.mahasiswa![0].program_studi.nama }} {{
                   kandidat.mahasiswa![0].angkatan.toString().substring(2, 4) }}</small>
               </div>
               <div class="h-full overflow-hidden rounded-b-full flex flex-col justify-end w-50 shrink-0">

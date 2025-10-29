@@ -17,7 +17,7 @@ const plugin = Autoplay({
 })
 
 const props = defineProps<{
-  kegiatan?: Kegiatan
+    kegiatan?: Kegiatan
 }>()
 
 // Countdown timer logic
@@ -29,34 +29,34 @@ const timeRemaining = computed(() => {
   const now = currentTime.value;
   const diff = target.getTime() - now.getTime();
 
-  if (diff <= 0) {
-    return { days: 0, hours: 0, minutes: 0, seconds: 0, expired: true };
-  }
+    if (diff <= 0) {
+        return { days: 0, hours: 0, minutes: 0, seconds: 0, expired: true };
+    }
 
-  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-  const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-  const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
 
-  return { days, hours, minutes, seconds, expired: false };
+    return { days, hours, minutes, seconds, expired: false };
 });
 
 // Helper function to format time values
 const formatTime = (time: number) => {
-  return time.toString().padStart(2, '0');
+    return time.toString().padStart(2, '0');
 };
 
 // Set up interval to update current time every second
 onMounted(() => {
-  interval = setInterval(() => {
-    currentTime.value = new Date();
-  }, 1000);
+    interval = setInterval(() => {
+        currentTime.value = new Date();
+    }, 1000);
 });
 
 onUnmounted(() => {
-  if (interval) {
-    clearInterval(interval);
-  }
+    if (interval) {
+        clearInterval(interval);
+    }
 });
 
 // Accordion FAQ data
@@ -77,16 +77,22 @@ const auth = computed(() => page.props.auth);
 const title = auth.value.user ? 'Beranda' : 'Selamat Datang';
 
 const breadcrumbs: BreadcrumbItem[] = [
-  {
-    title: 'Beranda',
-    href: '/dashboard',
-  },
+    {
+        title: 'Beranda',
+        href: '/dashboard',
+    },
 ];
 
 const heroImages = [
-  '/assets/foto-slide-hero/hero-image-1.jpg',
-  '/assets/foto-slide-hero/hero-image-2.jpg',
-  '/assets/foto-slide-hero/hero-image-3.jpg',
+  '/images/foto-slide-hero/Banner_1.webp',
+  '/images/foto-slide-hero/Banner_2.webp',
+  '/images/foto-slide-hero/Banner_3.webp',
+  '/images/foto-slide-hero/Banner_4.webp',
+  '/images/foto-slide-hero/Banner_5.webp',
+  '/images/foto-slide-hero/Banner_6.webp',
+  '/images/foto-slide-hero/Banner_7.webp',
+  '/images/foto-slide-hero/Banner_8.webp',
+  '/images/foto-slide-hero/Banner_9.webp',
 ]
 </script>
 <template>

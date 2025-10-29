@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Settings;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -16,7 +17,12 @@ class PasswordController extends Controller
      */
     public function edit(): Response
     {
-        return Inertia::render('settings/Password');
+        return Inertia::render('settings/Password', [
+            'flash' => [
+                'success' => session('success'),
+                'error' => session('error'),
+            ],
+        ]);
     }
 
     /**
@@ -27,12 +33,20 @@ class PasswordController extends Controller
         $validated = $request->validate([
             'current_password' => ['required', 'current_password'],
             'password' => ['required', Password::defaults(), 'confirmed'],
+        ], [
+            'current_password.current_password' => 'Kata sandi saat ini tidak sesuai.',
+            'password.confirmed' => 'Konfirmasi kata sandi tidak sesuai.',
+            'password.min' => 'Kata sandi harus terdiri dari minimal 8 karakter.',
         ]);
 
-        $request->user()->update([
-            'password' => $validated['password'],
-        ]);
-
-        return back();
+        try {
+            $request->user()->update([
+                'password' => Hash::make($validated['password']),
+            ]);
+    
+            return redirect()->back()->with('success', 'Kata sandi berhasil diperbarui.');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Terjadi kesalahan saat memperbarui kata sandi: ' . $e->getMessage());
+        }
     }
 }

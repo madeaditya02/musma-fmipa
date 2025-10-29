@@ -10,14 +10,14 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import AppLayout from '@/layouts/AppLayout.vue';
 import SettingsLayout from '@/layouts/settings/Layout.vue';
-import { type BreadcrumbItem, type User } from '@/types';
+import { FlashMessage, type BreadcrumbItem, type User } from '@/types';
 import { LoaderCircle } from 'lucide-vue-next';
 import { route } from 'ziggy-js';
-import { AspectRatio } from '@/components/ui/aspect-ratio';
 
 interface Props {
     mustVerifyEmail: boolean;
     status?: string;
+    flash?: FlashMessage;
 }
 
 const props = defineProps<Props>();
@@ -67,6 +67,15 @@ const submit = () => {
         },
     });
 };
+
+watch(() => props.flash, (newFlash) => {
+    if (newFlash?.success) {
+        toast.success(newFlash.success);
+    }
+    if (newFlash?.error) {
+        toast.error(newFlash.error);
+    }
+}, { immediate: true, deep: true });
 </script>
 
 <template>

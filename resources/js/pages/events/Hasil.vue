@@ -19,7 +19,7 @@ const kandidat = computed(() => {
 <template>
 
   <Head title="Hasil Pemilihan" />
-  <AppLayout background="main">
+  <AppLayout>
     <div class="h-full mb-8">
       <div class="w-full flex justify-between items-start relative">
         <img src="/assets/corner-image-left.png" alt="" class="w-20 sm:w-40 lg:w-50">

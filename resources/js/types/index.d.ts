@@ -17,6 +17,11 @@ export interface NavItem {
     isActive?: boolean;
 }
 
+export interface FlashMessage {
+    success?: string;
+    error?: string;
+}
+
 export type AppPageProps<
     T extends Record<string, unknown> = Record<string, unknown>,
 > = T & {
@@ -45,7 +50,7 @@ export interface User {
     status: 'aktif' | 'nonaktif';
     created_at: string;
     updated_at: string;
-    programStudi: ProgramStudi;
+    program_studi: ProgramStudi;
 }
 
 export interface Kegiatan {
