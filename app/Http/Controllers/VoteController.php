@@ -33,8 +33,8 @@ class VoteController extends Controller
         $kegiatan = Kegiatan::findOrFail($id);
         DB::table('surat_suara')->where('id_kegiatan', $id)->where('nim', $user->nim)->update(['has_vote' => now()]);
         // $kegiatan->mahasiswa()->sync([$user->nim => ['has_vote' => now()]]);
-        $kandidat = $kegiatan->kandidat()->where('id', $data['kandidat'])->get()->first();
-        $kandidat->jumlah_suara = $kandidat->jumlah_suara + 1;
+        $kandidat = $kegiatan->kandidat()->where('id', $data['kandidat'])->first();
+        $kandidat->jumlah_suara++;
         $kandidat->save();
         // VoteCandidate::dispatch($kegiatan);
         return to_route('home')->with('alert', ['type' => 'success', 'title' => 'Vote berhasil dilakukan', 'message' => 'Terima kasih sudah memilih calon ketua DPM FMIPA']);
