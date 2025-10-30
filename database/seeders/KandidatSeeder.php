@@ -20,8 +20,8 @@ class KandidatSeeder extends Seeder
                 'id_kegiatan' => 1,
                 'no_urut' => '01',
                 'foto' => 'foto-kandidat/calon-1.png',
-                'visi' => 'Mewujudkan Pemira yang transparan dan akuntabel.',
-                'misi' => '1. Meningkatkan partisipasi mahasiswa dalam Pemira. 2. Menyediakan informasi yang jelas dan akurat mengenai calon kandidat. 3. Meningkatkan kualitas debat kandidat.',
+                'visi' => 'Mewujudkan DPM FMIPA 2026 sebagai lembaga legislatif yang aspiratif, responsif, transparan, dan kolaboratif dalam menjalankan tugas dan wewenang, serta tanggung jawabnya demi terciptanya tata kelola organisasi yang demokratis dan berorientasi pada kemajuan mahasiswa FMIPA.',
+                'misi' => '1. Menegakan fungsi legislasi, aspirasi, dan pengawasan untuk memastikan terselenggaranya tata kelola organisasi yang efektif. 2. Menjalin komunikasi dan kerja sama yang harmonis dengan seluruh elemen mahasiswa, lembaga mahasiswa, serta pihak fakultas untuk mewujudkan sinergi yang produktif. 3. Mendorong partisipasi aktif mahasiswa dalam proses demokrasi serta penyaluran aspirasi secara terbuka dan berkelanjutan.',
             ],
             [
                 'id_kegiatan' => 1,

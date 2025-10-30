@@ -19,12 +19,12 @@ import { MapPin, Phone, Mail } from 'lucide-vue-next';
                     </div>
                     <div class="flex gap-2 items-center text-base text-sidebar-foreground">
                         <Phone class="size-5" />
-                        <a href="https://wa.me/6282147761973">+62-821-4776-1973</a>
+                        <a href="https://wa.me/6283851028574">+62 838-5102-8574</a>
                     </div>
                     <div class="flex gap-2 items-center text-base text-sidebar-foreground">
                         <Mail class="size-5" />
                         <a
-                            href="https://mail.google.com/mail/?view=cm&fs=1&to=pemilurayafmipaunud@gmail.com">pemilurayafmipaunud@gmail.com</a>
+                            href="https://mail.google.com/mail/?view=cm&fs=1&to=dpmfmipaunud2025@gmail.com">dpmfmipaunud2025@gmail.com</a>
                     </div>
                 </div>
                 <div className="w-full md:w-[400px] flex justify-center md:justify-end">

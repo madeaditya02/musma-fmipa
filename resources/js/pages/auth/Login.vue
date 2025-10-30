@@ -61,7 +61,7 @@ const submit = () => {
                         </TextLink>
                     </div>
                     <div class="relative">
-                        <Input id="password" type="password" required :tabindex="2" autocomplete="current-password"
+                        <Input id="password" :type="showPassword ? 'text' : 'password'" required :tabindex="2" autocomplete="current-password"
                             v-model="form.password" placeholder="Kata sandi min. 8 karakter" />
                         <button type="button" @click="showPassword = !showPassword"
                             class="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground">
