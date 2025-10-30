@@ -24,7 +24,7 @@ export const columns: ColumnDef<User>[] = [
             const avatar = row.getValue('avatar') as string | undefined
             return h('div', { class: 'flex justify-center' }, [
                 h('img', {
-                    src: avatar ? `/storage/${avatar}` : '/images/blank-profile-picture.webp',
+                    src: avatar ? `/storage/${avatar}` : '/assets/blank-profile-picture.webp',
                     alt: 'Profil',
                     class: 'h-10 w-10 rounded-md object-cover',
                 }),

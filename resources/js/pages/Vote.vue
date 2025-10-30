@@ -14,14 +14,16 @@ import AppLayout from '@/layouts/AppLayout.vue';
 import Button from '@/components/ui/button/Button.vue';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { CheckCircle2, Target, Users } from 'lucide-vue-next';
+import { CheckCircle2, LoaderCircle, Target, Users } from 'lucide-vue-next';
 import { Separator } from '@/components/ui/separator';
+import { disable } from '@/routes/two-factor';
 
 const props = defineProps<{
   kegiatan: Kegiatan
 }>()
 
 const isVote = ref(false)
+const isProcessing = ref(false)
 
 watch(isVote, () => {
   window.scrollTo({
@@ -33,6 +35,7 @@ const selectedKandidat = ref<Kandidat | null>(null);
 
 function vote() {
   if (selectedKandidat.value) {
+    isProcessing.value = true;
     router.post('', {
       kandidat: selectedKandidat.value?.id
     })
@@ -260,7 +263,10 @@ const formatMisi = (misi: string): string[] => {
 
             <DialogFooter>
               <Button variant="outline" @click="selectedKandidat = null">Batal</Button>
-              <Button @click="vote">Vote</Button>
+              <Button @click="vote" :disabled="isProcessing">
+                <LoaderCircle v-if="isProcessing" class="h-4 w-4 animate-spin" />
+                Vote
+              </Button>
             </DialogFooter>
           </DialogContent>
         </Dialog>
