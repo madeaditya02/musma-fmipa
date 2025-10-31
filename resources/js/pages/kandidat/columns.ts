@@ -116,7 +116,7 @@ export const columns: ColumnDef<Kandidat>[] = [
             const visi = row.getValue('visi') as string;
             const formattedVisi = visi.replace(/(\d+\.\s)/g, '\n$1').trim();
             return h('div', { class: 'text-left max-w-64' },
-                h('pre', { class: 'text-sm whitespace-pre-wrap font-sans' }, formattedVisi)
+                h('pre', { class: 'text-sm text-wrap font-sans line-clamp-5' }, formattedVisi)
             );
         },
     },
@@ -129,7 +129,7 @@ export const columns: ColumnDef<Kandidat>[] = [
             const misiItems = misi.split(/\d+\.\s/).filter(item => item.trim());
             return h('div', { class: 'text-left' },
                 h('ol', { class: 'list-decimal list-inside space-y-1' },
-                    misiItems.map(item => h('li', { class: 'text-sm truncate max-w-96' }, item.trim()))
+                    misiItems.map(item => h('li', { class: 'text-sm truncate max-w-80' }, item.trim()))
                 )
             );
         },

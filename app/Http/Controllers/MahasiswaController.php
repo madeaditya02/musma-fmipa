@@ -208,6 +208,7 @@ class MahasiswaController extends Controller
 
             $existingEmail = User::where('email', $validatedData['email'])
                 ->whereNot('nim', $nim)
+                ->whereNotNull('email')
                 ->first();
             if ($existingEmail) {
                 return redirect()->back()->with('alert', ['type' => 'error', 'title' => 'Email sudah terdaftar oleh mahasiswa lain.']);

@@ -188,7 +188,7 @@ const submit = () => {
                                 class="aspect-video h-full w-full border rounded-md object-contain" />
                             <img v-else :src="mahasiswaData?.avatar
                                 ? `/storage/${mahasiswaData.avatar}`
-                                : '/images/blank-profile-picture.webp'" alt="Avatar" :class="cn(
+                                : '/assets/blank-profile-picture.webp'" alt="Avatar" :class="cn(
                                     form.errors.avatar ? 'border-red-500' : '',
                                     'aspect-video h-full w-full border rounded-md object-contain'
                                 )" />
