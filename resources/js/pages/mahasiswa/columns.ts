@@ -126,7 +126,10 @@ export const columns: ColumnDef<User>[] = [
             } else {
                 return h('span', { class: 'px-2 py-1 bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200 rounded-md font-medium flex place-self-center mx-auto' }, 'Nonaktif')
             }
-        }
+        },
+        filterFn: (row, id, value) => {
+            return String(row.getValue(id)) === String(value);
+        },
     },
     {
         accessorKey: 'email_verified_at',
