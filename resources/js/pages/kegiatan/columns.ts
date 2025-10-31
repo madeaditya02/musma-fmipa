@@ -1,5 +1,6 @@
 import { h } from 'vue'
 import Form from './Form.vue'
+import { route } from 'ziggy-js'
 import { ProgramStudi, Kegiatan } from '@/types'
 import { ArrowUpDown } from 'lucide-vue-next'
 import { Button } from '@/components/ui/button'
@@ -24,7 +25,7 @@ export const columns: ColumnDef<Kegiatan>[] = [
             const foto = row.getValue('foto') as string | undefined
             return h('div', { class: 'flex justify-center' }, [
                 h('img', {
-                    src: foto ? `/storage/${foto}` : '/images/blank-photo-icon.jpg',
+                    src: foto ? `/storage/${foto}` : '/assets/blank-photo-icon.jpg',
                     alt: 'Foto Kegiatan',
                     class: 'h-10 w-10 rounded-md object-cover',
                 }),

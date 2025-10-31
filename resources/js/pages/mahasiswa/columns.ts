@@ -1,5 +1,6 @@
 import { h } from 'vue'
 import Form from './Form.vue'
+import { route } from 'ziggy-js'
 import { ProgramStudi, User } from '@/types'
 import { ArrowUpDown } from 'lucide-vue-next'
 import { Button } from '@/components/ui/button'

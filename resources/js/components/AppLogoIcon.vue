@@ -13,5 +13,5 @@ defineProps<Props>();
 </script>
 
 <template>
-    <img src="/assets/musma-logo.svg" :class="className" />
+    <img src="/assets/musma-logo.svg" :class="`size-16 ${className}`" />
 </template>

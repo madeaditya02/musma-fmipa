@@ -172,9 +172,11 @@ class EventController extends Controller
 
     public function hasil()
     {
-        $kegiatan = Kegiatan::where('tahun', now()->year)->with(['kandidat' => function ($query) {
-            $query->limit(2);
-        }, 'kandidat.mahasiswa.program_studi'])->get()->first()->toResource();
+        $kegiatan = Kegiatan::where('tahun', now()->year)
+            ->where('waktu_selesai', '>', now())
+            ->with(['kandidat' => function ($query) {
+                $query->limit(2);
+            }, 'kandidat.mahasiswa.program_studi'])->get()->first()->toResource();
         return Inertia::render('events/Hasil', ['kegiatan' => $kegiatan]);
     }
 }

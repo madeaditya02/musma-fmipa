@@ -133,4 +133,9 @@ class User extends Authenticatable
 
         return $mahasiswaData;
     }
+
+    public function isActive()
+    {
+        return $this->status === 'aktif';
+    }
 }

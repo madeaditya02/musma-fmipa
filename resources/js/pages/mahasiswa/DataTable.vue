@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import Form from './Form.vue'
+import { route } from 'ziggy-js'
 import { cn } from '@/lib/utils'
 import { ref, computed, watch } from 'vue'
 import { router } from '@inertiajs/vue3'
@@ -301,7 +302,7 @@ watch(isViewDialogOpen, (newValue) => {
                         <DialogHeader>
                             <DialogTitle>Sinkronisasi Data Mahasiswa</DialogTitle>
                             <DialogDescription>
-                                Apakah Anda yakin ingin menyinkronkan data mahasiswa tahun {{ new Date().getFullYear() }} dari Google Sheets? 
+                                Apakah Anda yakin ingin menyinkronkan data mahasiswa tahun {{ new Date().getFullYear() }} dari Excel? 
                                 Proses ini akan memperbarui atau menambahkan data mahasiswa yang ada.
                             </DialogDescription>
                         </DialogHeader>

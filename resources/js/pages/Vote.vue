@@ -64,7 +64,7 @@ const formatMisi = (misi: string): string[] => {
               2px -2px 0 #A50000,
               -2px 2px 0 #A50000,
               2px 2px 0 #A50000;">
-          Pemilihan Ketua DPM FMIPA 2026
+          {{ kegiatan.nama }}
         </h1>
       </div>
 
@@ -101,7 +101,7 @@ const formatMisi = (misi: string): string[] => {
                 <div :class="`lg:col-span-4 relative ${index % 2 !== 0 ? 'lg:order-last' : ''}`">
                   <!-- Mobile View - Full Image with Overlay -->
                   <div class="relative h-64 min-h-[400px] lg:hidden">
-                    <img :src="k.foto !== null ? `/storage/${k.foto}` : '/images/blank-profile-picture.webp'"
+                    <img :src="k.foto !== null ? `/storage/${k.foto}` : '/assets/blank-profile-picture.webp'"
                       alt="Foto Kandidat"
                       class="absolute inset-0 w-[80%] mx-auto h-full object-cover md:object-contain object-top" />
 
@@ -140,7 +140,7 @@ const formatMisi = (misi: string): string[] => {
                     <div class="relative">
                       <!-- Circular Photo -->
                       <div class="size-72 rounded-full overflow-hidden border-4 border-primary/20 shadow-xl">
-                        <img :src="k.foto !== null ? `/storage/${k.foto}` : '/images/blank-profile-picture.webp'"
+                        <img :src="k.foto !== null ? `/storage/${k.foto}` : '/assets/blank-profile-picture.webp'"
                           alt="Foto Kandidat" class="w-[90%] mx-auto h-full object-cover object-top" />
                       </div>
 

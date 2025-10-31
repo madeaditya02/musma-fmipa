@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Events\VoteCandidate;
 use App\Models\Kegiatan;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -15,6 +16,11 @@ class VoteController extends Controller
     {
         if (Auth::user()->is_admin) {
             return back()->with('alert', ['type' => 'error', 'title' => 'Anda adalah admin', 'message' => 'Sebagai admin, anda tidak berhak untuk melakukan voting.']);
+        }
+
+        $user = User::find(Auth::user()->nim);
+        if ($user->isActive() === false) {
+            return back()->with('alert', ['type' => 'error', 'title' => 'Anda bukan mahasiswa aktif', 'message' => 'Anda harus terdaftar sebagai mahasiswa aktif untuk dapat melakukan voting.']);
         }
         $kegiatan = Kegiatan::with('kandidat.mahasiswa.program_studi')->findOrFail($id);
         if (now()->isBefore($kegiatan->waktu_mulai)) {
@@ -31,8 +37,8 @@ class VoteController extends Controller
         $user = Auth::user();
         $data = $request->validate(['kandidat' => 'required']);
         $kegiatan = Kegiatan::findOrFail($id);
-        DB::table('surat_suara')->where('id_kegiatan', $id)->where('nim', $user->nim)->update(['has_vote' => now()]);
-        // $kegiatan->mahasiswa()->sync([$user->nim => ['has_vote' => now()]]);
+        // DB::table('surat_suara')->where('id_kegiatan', $id)->where('nim', $user->nim)->update(['has_vote' => now()]);
+        $kegiatan->mahasiswa()->syncWithoutDetaching([$user->nim => ['has_vote' => now()]]);
         $kandidat = $kegiatan->kandidat()->where('id', $data['kandidat'])->first();
         $kandidat->jumlah_suara++;
         $kandidat->save();
