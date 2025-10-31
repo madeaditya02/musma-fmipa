@@ -28,25 +28,40 @@ class MahasiswaController extends Controller
     public function syncMahasiswa(int $year)
     {
         // Get current users and users from spreadsheet
-        $currentUsers = User::all();
+        $currentUsers = User::where('is_admin', false)->get();
         $users = User::getMahasiswaFromSheet($year);
 
         // Sync users
         try {
+            // Collect NIMs from spreadsheet
+            $spreadsheetNims = collect($users)->pluck('nim')->toArray();
+
             foreach ($users as $user) {
                 $currentUser = $currentUsers->firstWhere('nim', $user['nim']);
-                // Sync user kegiatan logic can be added here if needed
+
                 if ($currentUser) {
-                    // Update existing user
-                    $currentUser->update((array)$user);
+                    // Update existing user and set status to 'aktif'
+                    $currentUser->update(array_merge((array)$user, ['status' => 'aktif']));
                 } else {
-                    // Create new user
-                    User::create((array)$user);
+                    // Create new user with status 'aktif'
+                    User::create(array_merge((array)$user, ['status' => 'aktif']));
                 }
             }
-            return redirect()->back()->with('alert', ['type' => 'success', 'title' => 'Data mahasiswa tahun ' . $year . ' berhasil disinkronisasi.']);
+
+            // Set status to 'nonaktif' for users not in spreadsheet
+            User::where('is_admin', false)
+                ->whereNotIn('nim', $spreadsheetNims)
+                ->update(['status' => 'nonaktif']);
+
+            return redirect()->back()->with('alert', [
+                'type' => 'success',
+                'title' => 'Data mahasiswa tahun ' . $year . ' berhasil disinkronisasi.'
+            ]);
         } catch (\Exception $e) {
-            return redirect()->back()->with('alert', ['type' => 'success', 'title' => 'Terjadi kesalahan saat menyinkronkan data mahasiswa: ' . $e->getMessage()]);
+            return redirect()->back()->with('alert', [
+                'type' => 'error',
+                'title' => 'Terjadi kesalahan saat menyinkronkan data mahasiswa: ' . $e->getMessage()
+            ]);
         }
     }
 

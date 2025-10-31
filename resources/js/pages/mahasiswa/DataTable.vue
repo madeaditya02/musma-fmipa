@@ -96,6 +96,12 @@ const getFilterDisplayValue = (value: any, columnId?: string): string => {
     }
 
     // Handle status display
+    if (columnId === 'status') {
+        if (value === 'aktif') return 'Aktif'
+        if (value === 'nonaktif') return 'Nonaktif'
+    }
+
+    // Handle status display
     if (columnId === 'email_verified_at') {
         if (value === 'terverifikasi') return 'Terverifikasi'
         if (value === 'belum_terverifikasi') return 'Belum Terverifikasi'
@@ -117,8 +123,13 @@ const columnFiltersConfig = [
         type: 'select' as const,
     },
     {
-        columnId: 'email_verified_at',
+        columnId: 'status',
         label: 'Status',
+        type: 'select' as const,
+    },
+    {
+        columnId: 'email_verified_at',
+        label: 'Verifikasi',
         type: 'select' as const,
     },
 ]
