@@ -109,16 +109,17 @@ class RegisteredUserController extends Controller
         ]);
 
         // Generate surat suara
-        $kegiatan = Kegiatan::where('tahun', now()->year)->first();
-        if ($kegiatan) {
-            DB::table('surat_suara')->insert([
-                'id_kegiatan' => $kegiatan->id,
-                'nim' => $user->nim,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]);
+        $kegiatan = Kegiatan::where('tahun', now()->year)
+            ->where('waktu_selesai', '>', now())
+            ->get();
+        if ($kegiatan->isNotEmpty()) {
+            foreach ($kegiatan as $k) {
+                $k->mahasiswa()->attach([$user->nim => ['has_vote' => null]]);
+            }
         }
 
-        return to_route('login')->with('alert', ['type' => 'success', 'title' => 'Pendaftaran berhasil. Silakan masuk ke akun Anda.']);
+        return to_route('login')
+            ->with('alert', ['type' => 'success', 'title' => 'Pendaftaran berhasil. Silakan masuk ke akun Anda.'])
+            ->with('status', 'Pendaftaran berhasil. Silakan masuk ke akun Anda.');
     }
 }

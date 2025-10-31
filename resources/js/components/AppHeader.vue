@@ -14,6 +14,7 @@ import type { BreadcrumbItem } from '@/types';
 import { Link, usePage } from '@inertiajs/vue3';
 import { computed } from 'vue';
 import { route } from 'ziggy-js';
+import dayjs from 'dayjs';
 import { Calendar, Home, UserCheck, Users, CheckCircle2, Menu, LucideIcon } from 'lucide-vue-next';
 
 interface Props {
@@ -93,12 +94,14 @@ const rightNavItems: { title: string, href: string, icon?: LucideIcon }[] = [
               <SheetHeader class="flex justify-start text-left">
                 <div class="flex justify-start items-center gap-2 text-left">
                   <AppLogoIcon class="size-6 fill-current text-black dark:text-white" />
-                  <span class="mb-0.5 truncate leading-tight font-semibold text-primary">Musyawarah Mahasiswa<br />FMIPA
-                    2025</span> <!-- ganti tahun -->
+                  <span class="mb-0.5 truncate leading-tight font-semibold text-primary">
+                    Musyawarah Mahasiswa<br />
+                    FMIPA {{ dayjs().year() }}
+                  </span>
                 </div>
               </SheetHeader>
-              <div class="flex h-full flex-1 flex-col justify-between space-y-4 py-4">
-                <nav class="-mx-3 space-y-1">
+              <div class="flex h-full flex-1 flex-col justify-between space-y-4 p-4">
+                <nav class="-mx-3 space-y-2">
                   <Link v-for="item in mainNavItems" :key="item.title" :href="item.href"
                     class="flex items-center gap-x-3 rounded-lg px-3 py-2 text-sm font-medium hover:bg-accent"
                     :class="activeItemStyles(item.href)">

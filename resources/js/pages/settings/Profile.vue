@@ -105,7 +105,7 @@ watch(() => props.flash, (newFlash) => {
                                     class="aspect-video h-full w-full border rounded-md object-contain" />
                                 <img v-else :src="user?.avatar
                                     ? `/storage/${user.avatar}`
-                                    : '/images/blank-profile-picture.webp'" alt="Avatar" :class="cn(
+                                    : '/assets/blank-profile-picture.webp'" alt="Avatar" :class="cn(
                                         form.errors.avatar ? 'border-red-500' : '',
                                         'aspect-video h-full w-full border rounded-md object-contain'
                                     )" />
