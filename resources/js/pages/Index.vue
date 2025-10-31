@@ -129,7 +129,7 @@ const heroImages = [
             </h2>
             <p class="text-white font-medium text-sm md:text-base max-w-lg">
               Pemilihan Ketua Dewan Perwakilan Mahasiswa Fakultas Matematika dan Ilmu Pengetahuan Alam tahun {{
-                dayjs().year() }} akan dimulai dalam
+                dayjs().year() + 1 }} akan dimulai dalam
             </p>
           </div>
 
@@ -184,7 +184,7 @@ const heroImages = [
 
           <!-- Status Message -->
           <Button variant="outline" size="lg" 
-            class="text-base dark:bg-foreground dark:text-background dark:border-foreground" as-child>
+            class="text-base dark:bg-foreground dark:text-background dark:border-foreground dark:hover:bg-foreground/30" as-child>
             <Link :href="auth.user ? `/vote/${kegiatan?.id}` : '/login'">
             Vote Sekarang!
             </Link>
