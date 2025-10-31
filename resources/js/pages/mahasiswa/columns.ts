@@ -1,5 +1,6 @@
 import { h } from 'vue'
 import Form from './Form.vue'
+import { route } from 'ziggy-js'
 import { ProgramStudi, User } from '@/types'
 import { ArrowUpDown } from 'lucide-vue-next'
 import { Button } from '@/components/ui/button'
@@ -24,7 +25,7 @@ export const columns: ColumnDef<User>[] = [
             const avatar = row.getValue('avatar') as string | undefined
             return h('div', { class: 'flex justify-center' }, [
                 h('img', {
-                    src: avatar ? `/storage/${avatar}` : '/images/blank-profile-picture.webp',
+                    src: avatar ? `/storage/${avatar}` : '/assets/blank-profile-picture.webp',
                     alt: 'Profil',
                     class: 'h-10 w-10 rounded-md object-cover',
                 }),
