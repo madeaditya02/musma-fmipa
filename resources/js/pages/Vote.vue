@@ -17,6 +17,7 @@ import { Badge } from '@/components/ui/badge';
 import { CheckCircle2, LoaderCircle, Target, Users } from 'lucide-vue-next';
 import { Separator } from '@/components/ui/separator';
 import { disable } from '@/routes/two-factor';
+import dayjs from 'dayjs';
 
 const props = defineProps<{
   kegiatan: Kegiatan
@@ -58,12 +59,8 @@ const formatMisi = (misi: string): string[] => {
         <img src="/assets/background-logo-dpm.png" alt="" class="h-20 sm:h-50 my-auto">
         <img src="/assets/corner-image-right.png" alt="" class="w-20 sm:w-40 lg:w-50">
         <h1
-          class="text-xl sm:text-3xl lg:text-4xl font-bold text-center text-white uppercase absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2"
-          style="text-shadow:
-            -2px -2px 0 #A50000,  
-              2px -2px 0 #A50000,
-              -2px 2px 0 #A50000,
-              2px 2px 0 #A50000;">
+          class="text-xl sm:text-3xl lg:text-4xl font-bold text-center text-primary uppercase absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2"
+          style="text-shadow: -2px -2px 0 #FFFFFF, 2px -2px 0 #FFFFFF, -2px 2px 0 #FFFFFF, 2px 2px 0 #FFFFFF;">
           {{ kegiatan.nama }}
         </h1>
       </div>
@@ -74,17 +71,11 @@ const formatMisi = (misi: string): string[] => {
             <div class="mx-auto mt-12 grid w-full max-w-7xl items-start gap-4 px-4">
               <h1 class="md:text-md font-semibold lg:text-xl">Syarat & Ketentuan :</h1>
               <ol class="md:text-md ml-2 list-inside list-decimal space-y-2 text-sm md:ml-10 lg:text-lg">
-                <li>
-                  Mahasiswa atau mahasiswi yang dapat memilih adalah mahasiswa atau mahasiswi Fakultas
-                  Matematika dan Ilmu Pengetahuan Alam.
-                </li>
-                <li>Mahasiswa atau mahasiswi yang dapat memilih adalah mahasiswa atau mahasiswi aktif.</li>
-                <li>Mahasiswa atau mahasiswi hanya bisa melakukan pemilihan sebanyak satu kali.</li>
-                <li>Mahasiswa atau mahasiswi diharapkan memilih dengan jujur.</li>
-                <li>Hasil pemilihan bersifat mutlak dan tidak dapat diganggu gugat, sesuai dengan aturan yang
-                  telah ditetapkan.</li>
-                <li>Setiap pelanggaran terhadap syarat dan ketentuan ini akan dikenakan sanksi sesuai dengan
-                  peraturan yang berlaku.</li>
+                <li>Mahasiswa/i yang dapat memilih adalah mahasiswa/i aktif Fakultas MIPA yang terdaftar sebagai calon delegasi DPM FMIPA periode {{ dayjs().year() + 1 }}.</li>
+                <li>Mahasiswa/i hanya bisa melakukan pemilihan sebanyak satu kali tanpa adanya pengulangan maupun perubahan pilihan.</li>
+                <li>Mahasiswa/i diharapkan memilih dengan berlandaskan Luberjurdil (Langsung, Umum, Bebas, Rahasia, Jujur, dan Adil).</li>
+                <li>Hasil pemilihan bersifat mutlak dan tidak dapat diganggu gugat, sesuai dengan aturan yang telah ditetapkan.</li>
+                <li>Setiap pelanggaran terhadap syarat dan ketentuan ini akan dikenakan sanksi sesuai dengan peraturan yang berlaku.</li>
               </ol>
             </div>
           </div>

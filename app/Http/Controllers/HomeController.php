@@ -14,7 +14,7 @@ class HomeController extends Controller
         $year = now()->year;
         $kegiatan = Kegiatan::with('kandidat.mahasiswa')
             ->where('tahun', $year)
-            ->where('waktu_mulai', '<=', now())
+            ->where('waktu_selesai', '>', now())
             ->first()
             ->toResource();
 
